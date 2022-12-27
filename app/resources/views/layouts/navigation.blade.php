@@ -26,6 +26,11 @@
                         {{ __('Logs') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('relation.index')" :active="request()->routeIs('relation.*')">
+                        {{ __('Connect') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -85,6 +90,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('logs.index')" :active="request()->routeIs('logs.*')">
                 {{ __('Logs') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('relation.index')" :active="request()->routeIs('relation.*')">
+                {{ __('Connect') }}
             </x-responsive-nav-link>
         </div>
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\UserRelationController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -35,10 +36,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/templates/edit', [TemplateController::class, 'edit'])->name('templates.edit');
     Route::post('/templates/edit', [TemplateController::class, 'update'])->name('templates.update');
 
+    // アカウント連携機能
+    Route::get('/connect', [UserRelationController::class, 'index'])->name('relation.index');
+    Route::get('/connect/create', [UserRelationController::class, 'create'])->name('relation.create');
+    Route::get('/connect/invite', [UserRelationController::class, 'code'])->name('relation.code');
+    Route::get('/connect/get', [UserRelationController::class, 'get'])->name('relation.get');
+    Route::post('/connect/get', [UserRelationController::class, 'readCode'])->name('relation.readCode');
+
     // ログ機能
+
     Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
-    Route::get('/logs/edit', [LogController::class, 'edit'])->name('logs.edit');
-    Route::post('/logs/edit', [LogController::class, 'update'])->name('logs.update');
+    Route::get('/logs/{id}', [LogController::class, 'edit'])->name('logs.edit');
+    Route::post('/logs/{id}', [LogController::class, 'update'])->name('logs.update');
+    // Route::get('/logs/edit', [LogController::class, 'edit'])->name('logs.edit');
+    // Route::post('/logs/edit', [LogController::class, 'update'])->name('logs.update');
 });
 
 require __DIR__.'/auth.php';
