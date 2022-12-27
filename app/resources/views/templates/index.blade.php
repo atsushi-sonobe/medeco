@@ -14,8 +14,9 @@
                 <p><a href="/templates/edit">作りはじめましょう！</a></p>
                 @else
                 <div class="js-templateSelectList"></div>
-                <p><a href="/templates/edit">編集する</a></p>
+                <p><a href="/templates/edit" class="btn btn-outline-primary">編集する</a></p>
                 @endif
+                <button type="button" class="btn btn-outline-primary">Primary</button>
                 </div>
             </div>
         </div>
