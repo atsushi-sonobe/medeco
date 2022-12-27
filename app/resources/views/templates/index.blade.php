@@ -16,7 +16,6 @@
                 <div class="js-templateSelectList"></div>
                 <p><a href="/templates/edit" class="btn btn-outline-primary">編集する</a></p>
                 @endif
-                <button type="button" class="btn btn-outline-primary">Primary</button>
                 </div>
             </div>
         </div>
@@ -42,8 +41,9 @@
                 var selected_id = val;
                 var title = titles[selected_id];
                 var items = values[selected_id].items;
-                html += '<div class="js-templateSelectBox" data-id="'+selected_id+'" style="border:1px solid gray;padding:10px;margin-bottom: 5px;">';
-                html += '<p>タイトル: '+title+'</p>';
+                html += '<div class="js-templateSelectBox card" data-id="'+selected_id+'" style="margin: 0 0 5px 0"><div class="card-body">';
+                html += '<h5 class="card-title">'+title+'</h5>';
+                html += '<div class="card-text">';
                 $.each(items, function(index, val) {
                     if(val.title) {
                         html += '<p>見出し: '+val.title+'</p>';
@@ -55,6 +55,8 @@
                         if(val.type == 'textbox') type_label = 'テキストボックス';
                         if(val.type == 'number') type_label = '数値（整数）';
                         if(val.type == 'select') type_label = 'セレクトボックス';
+                        if(val.type == 'time') type_label = '時間';
+
                         html += '<p>タイプ: '+type_label+'</p>';
                     }
                     if(val.unit) {
@@ -64,9 +66,10 @@
                         html += '<p>選択肢: '+val.value+'</p>';
                     }
                 });
+                html += '</div>'
                 html += '<p><a href="javascript:void(0)" class="js-templateSelectRemove">削除</a></p>';
                 html += '<p><input type="text" disabled value="'+selected_id+'" /></p>';
-                html += '</div>';
+                html += '</div></div>';
 
                 $('.js-templateSelectList').append(html);
             });

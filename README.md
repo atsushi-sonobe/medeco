@@ -36,7 +36,17 @@ alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 - `sail down --volumes --rmi all --remove-orphans` #環境の削除
 
 
+### Frontend
+
+- Bootstrap 5.2.3 [Cheatsheet](https://getbootstrap.com/docs/5.3/examples/cheatsheet/)
+
+```
+$ sail npm run dev # dev
+$ sail npm run dev # build (publish)
+```
+
 ### Staging
 
 https://medeco.nuttyengine.com/
+
 BASIC:

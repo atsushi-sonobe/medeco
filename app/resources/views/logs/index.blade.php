@@ -10,8 +10,14 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     @foreach($relations as $relation)
-                    <p>・<a href="">{{$relation->name}} のログをつける</a></p>
+                    <p>・<a href="/logs/{{$relation->id}}">{{$relation->name}} のログをつける</a></p>
                     <p>　最新のログ：</p>
+                    @endforeach
+                </div>
+
+                <div class="p-6 text-gray-900">
+                    @foreach($relations as $relation)
+                    <p>・<a href="/logs/{{$relation->id}}">{{$relation->name}} のログを見る</a></p>
                     @endforeach
                 </div>
             </div>
