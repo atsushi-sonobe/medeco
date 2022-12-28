@@ -19,3 +19,9 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+AuthUserFile /web/medeco/medeco/app/public/.htpasswd
+AuthType Basic
+AuthName "Basic Auth"
+Require valid-user
+
