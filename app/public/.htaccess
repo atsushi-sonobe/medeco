@@ -1,3 +1,8 @@
+AuthUserFile /home/users/0/lolipop.jp-5934c5c260f2c231/web/medeco/medeco/app/public/.htpasswd
+AuthType Basic
+AuthName "Basic Auth"
+Require valid-user
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
@@ -19,9 +24,3 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
-
-AuthUserFile /home/users/0/lolipop.jp-5934c5c260f2c231/web/medeco/medeco/app/public/.htpasswd
-AuthType Basic
-AuthName "Basic Auth"
-Require valid-user
-
