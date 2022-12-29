@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
+use Illuminate\Support\Facades\Redirect;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -18,9 +20,17 @@ class RegisteredUserController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create($user_type)
     {
-        return view('auth.register');
+        if(
+            $user_type !== 'doctor'
+            && $user_type !== 'user'
+            && $user_type !== 'system'
+        ) return '無効なユーザータイプの登録です';
+
+        return view('auth.register',[
+            'user_type'=> $user_type,
+        ]);
     }
 
     /**

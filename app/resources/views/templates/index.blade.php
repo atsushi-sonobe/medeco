@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Templates') }}
+            テンプレート
         </h2>
     </x-slot>
 
@@ -10,8 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                 @if(!$template)
-                <p>まだありません</p>
-                <p><a href="/templates/edit">作りはじめましょう！</a></p>
+                <p>テンプレートはまだありません。</p>
+                <p><a href="{{route('templates.edit')}}" class="btn btn-outline-primary">テンプレート作成</a></p>
                 @else
                 <div class="js-templateSelectList"></div>
                 <p><a href="/templates/edit" class="btn btn-outline-primary">編集する</a></p>
@@ -41,12 +41,12 @@
                 var selected_id = val;
                 var title = titles[selected_id];
                 var items = values[selected_id].items;
-                html += '<div class="js-templateSelectBox card" data-id="'+selected_id+'" style="margin: 0 0 5px 0"><div class="card-body">';
-                html += '<h5 class="card-title">'+title+'</h5>';
-                html += '<div class="card-text">';
+                html += '<div class="js-templateSelectBox" data-id="'+selected_id+'" style="border:1px solid gray;padding:10px;margin-bottom: 5px;">';
+                html += '<p style="font-weight:bold">'+title+'</p>';
+                html += '<p style="margin-bottom: 0;">';
                 $.each(items, function(index, val) {
                     if(val.title) {
-                        html += '<p>見出し: '+val.title+'</p>';
+                        html += '<b>'+val.title+'</b>　';
                     }
                     if(val.type) {
                         var type_label = '';
@@ -55,21 +55,19 @@
                         if(val.type == 'textbox') type_label = 'テキストボックス';
                         if(val.type == 'number') type_label = '数値（整数）';
                         if(val.type == 'select') type_label = 'セレクトボックス';
-                        if(val.type == 'time') type_label = '時間';
-
-                        html += '<p>タイプ: '+type_label+'</p>';
+                        if(val.type == 'time') type_label = '時間を選択';
+                        html += type_label;
                     }
                     if(val.unit) {
-                        html += '<p>単位: '+val.unit+'</p>';
+                        html += ' '+val.unit;
                     }
                     if(val.value) {
-                        html += '<p>選択肢: '+val.value+'</p>';
+                        html += ' '+val.value;
                     }
+                    html += '<br />';
                 });
-                html += '</div>'
-                html += '<p><a href="javascript:void(0)" class="js-templateSelectRemove">削除</a></p>';
-                html += '<p><input type="text" disabled value="'+selected_id+'" /></p>';
-                html += '</div></div>';
+                html += '</p>';
+                html += '</div>';
 
                 $('.js-templateSelectList').append(html);
             });

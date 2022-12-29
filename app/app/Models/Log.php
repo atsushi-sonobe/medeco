@@ -13,8 +13,8 @@ class Log extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'doctor_id',
         'user_id',
+        'template_id',
         'log',
     ];
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\UserRelationController;
+use App\Http\Controllers\DashboardController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +23,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -44,12 +47,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/connect/get', [UserRelationController::class, 'readCode'])->name('relation.readCode');
 
     // ログ機能
-
     Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
     Route::get('/logs/{id}', [LogController::class, 'edit'])->name('logs.edit');
     Route::post('/logs/{id}', [LogController::class, 'update'])->name('logs.update');
-    // Route::get('/logs/edit', [LogController::class, 'edit'])->name('logs.edit');
-    // Route::post('/logs/edit', [LogController::class, 'update'])->name('logs.update');
+    Route::get('/logs/view/{id}', [LogController::class, 'view'])->name('logs.view');
 });
 
 require __DIR__.'/auth.php';
