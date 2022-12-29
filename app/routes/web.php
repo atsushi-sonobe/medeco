@@ -19,38 +19,41 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::group(['middleware' => 'basicauth'], function() {
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->middleware(['auth', 'verified'])->name('dashboard');
 
-    // テンプレート編集機能
-    Route::get('/templates', [TemplateController::class, 'index'])->name('templates.index');
-    Route::get('/templates/edit', [TemplateController::class, 'edit'])->name('templates.edit');
-    Route::post('/templates/edit', [TemplateController::class, 'update'])->name('templates.update');
+    Route::middleware('auth')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // アカウント連携機能
-    Route::get('/connect', [UserRelationController::class, 'index'])->name('relation.index');
-    Route::get('/connect/create', [UserRelationController::class, 'create'])->name('relation.create');
-    Route::get('/connect/invite', [UserRelationController::class, 'code'])->name('relation.code');
-    Route::get('/connect/get', [UserRelationController::class, 'get'])->name('relation.get');
-    Route::post('/connect/get', [UserRelationController::class, 'readCode'])->name('relation.readCode');
+        // テンプレート編集機能
+        Route::get('/templates', [TemplateController::class, 'index'])->name('templates.index');
+        Route::get('/templates/edit', [TemplateController::class, 'edit'])->name('templates.edit');
+        Route::post('/templates/edit', [TemplateController::class, 'update'])->name('templates.update');
 
-    // ログ機能
-    Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
-    Route::get('/logs/{id}', [LogController::class, 'edit'])->name('logs.edit');
-    Route::post('/logs/{id}', [LogController::class, 'update'])->name('logs.update');
-    Route::get('/logs/view/{id}', [LogController::class, 'view'])->name('logs.view');
+        // アカウント連携機能
+        Route::get('/connect', [UserRelationController::class, 'index'])->name('relation.index');
+        Route::get('/connect/create', [UserRelationController::class, 'create'])->name('relation.create');
+        Route::get('/connect/invite', [UserRelationController::class, 'code'])->name('relation.code');
+        Route::get('/connect/get', [UserRelationController::class, 'get'])->name('relation.get');
+        Route::post('/connect/get', [UserRelationController::class, 'readCode'])->name('relation.readCode');
+
+        // ログ機能
+        Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+        Route::get('/logs/{id}', [LogController::class, 'edit'])->name('logs.edit');
+        Route::post('/logs/{id}', [LogController::class, 'update'])->name('logs.update');
+        Route::get('/logs/view/{id}', [LogController::class, 'view'])->name('logs.view');
+    });
 });
 
 require __DIR__.'/auth.php';
