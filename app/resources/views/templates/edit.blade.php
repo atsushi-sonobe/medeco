@@ -122,7 +122,7 @@
                     if(val.type == 'number') type_label = '数値（整数）';
                     if(val.type == 'select') type_label = 'セレクトボックス';
                     if(val.type == 'time') type_label = '時間を選択';
-                    html += ype_label;
+                    html += type_label;
                 }
                 if(val.unit) {
                     html += ' '+val.unit;
