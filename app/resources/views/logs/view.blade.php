@@ -1,7 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{$relation->name}}さんのログ <?php if($from && $until){ echo '（'.$from.'〜'.$until.'）'; } ?>
+            @if($user->type == 'doctor')
+                {{$relation->name}}さんのログ <?php if($from && $until){ echo '（'.$from.'〜'.$until.'）'; } ?>
+            @else
+                {{$doctor->name}}さんに共有しているログ <?php if($from && $until){ echo '（'.$from.'〜'.$until.'）'; } ?>
+            @endif
         </h2>
     </x-slot>
 

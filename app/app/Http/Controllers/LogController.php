@@ -85,6 +85,12 @@ class LogController extends Controller
         ->join('users', 'users.id', '=', 'user_relations.user_id')
         ->first();
 
+        // 先生の情報の取得
+        $doctor = UserRelation::where('user_id', $user_id)
+        ->where('doctor_id', $doctor_id)
+        ->join('users', 'users.id', '=', 'user_relations.doctor_id')
+        ->first();
+
         $template = Template::where('doctor_id', $doctor_id)->first();
         $template_id = (string)$template->id;
         $items = TemplateItem::all();
@@ -114,6 +120,7 @@ class LogController extends Controller
             'items' => $items,
             'data' => $data,
             'user' => $user,
+            'doctor' => $doctor,
             'relation' => $relation,
         ]);
     }
