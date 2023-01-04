@@ -13,8 +13,8 @@
                 <div class="p-6 text-gray-900">
                     <p class="h4">患者のログを見る</p>
                     <ul class="list-unstyled">
-                        @foreach($relations_user as $relation)
-                        <li><a href="/logs/view/{{$relation->id}}">{{$relation->name}} のログを見る</a></li>
+                        @foreach($relations_user as $user)
+                        <li><a href="/logs/view/{{$user->id}}">{{$user->name}} のログを見る</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -24,8 +24,17 @@
                 <div class="p-6 text-gray-900">
                     <p class="h4">医師を選んでログをつける</p>
                     <ul class="list-unstyled">
-                        @foreach($relations_doctor as $relation)
-                        <li><a href="/logs/{{$relation->id}}">{{$relation->name}} のログをつける</a></li>
+                        @foreach($relations_doctor as $user)
+                        <li><a href="/logs/{{$user->id}}">{{$user->name}} のログをつける</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                <div class="p-6 text-gray-900">
+                    <p class="h4">自分のログの確認</p>
+                    <ul class="list-unstyled">
+                        @foreach($relations_doctor as $user)
+                        <li><a href="/logs/view/{{$user->id}}">{{$user->name}} のログを確認</a></li>
                         @endforeach
                     </ul>
                 </div>

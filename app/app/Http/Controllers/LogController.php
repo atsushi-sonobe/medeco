@@ -39,11 +39,10 @@ class LogController extends Controller
         // 患者だけ
         $user = $request->user();
 
-        $relation = UserRelation::where('user_id', $user->id)
-        ->join('templates', 'templates.doctor_id', '=', 'user_relations.doctor_id')
-        ->first();
-        if(isset($relation->items)) {
-            $items = TemplateItem::whereIn('id', explode(",",$relation->items))->get();
+        $template = Template::where('doctor_id', $id)->first();
+
+        if(isset($template->items)) {
+            $items = TemplateItem::whereIn('id', explode(",",$template->items))->get();
         } else {
             $items = null;
         }
@@ -60,11 +59,14 @@ class LogController extends Controller
         $data = $request->all();
         unset($data['_token']);
         $user = $request->user();
-        // todo 最新のみ保存にする？
-        // 編集の場合は？
+
+        $relation = Template::where('doctor_id', $id)->first();
+        $template_id = $relation->id;
+
+        // todo 編集機能
         Log::create([
             'user_id' => $user->id,
-            'template_id' => $id,
+            'template_id' => $template_id,
             'log' => json_encode($data),
         ]);
         return Redirect::route('logs.index');
@@ -72,15 +74,19 @@ class LogController extends Controller
 
     public function view(Request $request, $id)
     {
-        // 医者だけ
-        // todo 患者側でも履歴を見れるようにしたい
+        // 医者・患者
         $user = $request->user();
+        $doctor_id = $user->type == 'doctor' ? (string)$user->id : $id;
+        $user_id = $user->type == 'doctor' ? $id : (string)$user->id;
 
         // 患者の情報の取得
-        $relation = UserRelation::where('user_id', $id)
+        $relation = UserRelation::where('user_id', $user_id)
+        ->where('doctor_id', $doctor_id)
         ->join('users', 'users.id', '=', 'user_relations.user_id')
         ->first();
 
+        $template = Template::where('doctor_id', $doctor_id)->first();
+        $template_id = (string)$template->id;
         $items = TemplateItem::all();
 
         //日付が選択されたら
@@ -89,10 +95,16 @@ class LogController extends Controller
         // todo IDの指定
         if ($from && $until) {
             //ハッシュタグの選択された20xx/xx/xx ~ 20xx/xx/xxのレポート情報を取得
-            $data = Log::where('user_id', $id)->whereBetween("created_at", [$from, $until])->get();
+            $data = Log::where('user_id', $user_id)
+            ->where('template_id', $template_id)
+            ->whereBetween("created_at", [$from, $until])
+            ->get();
+
         } else {
             //リクエストデータがなければそのままで表示
-            $data = Log::where('user_id', $id)->get();
+            $data = Log::where('user_id', $user_id)
+            ->where('template_id', $template_id)
+            ->get();
         }
 
         return view('logs.view', [

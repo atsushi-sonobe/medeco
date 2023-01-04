@@ -67,9 +67,19 @@
                     @endif
                     @endif
 
+                    @if($user->type == 'user' || $user->type == 'system')
+                    <hr />
+                    <p class="h4">ログを確認する</p>
+                    @if(count($relations_doctor))
+                    <ul class="list-unstyled">
+                        @foreach($relations_doctor as $u)
+                        <li><a href="/logs/view/{{$u->id}}">{{$u->name}} のログを確認する</a></li>
+                        @endforeach
+                    </ul>
+                    @endif
+                    @endif
 
                     <hr />
-
                     <p class="h4">アカウント連携</p>
                     <p><a href="{{route('relation.index')}}" class="btn btn-outline-primary">アカウント連携の確認</a></p>
                     <p>
