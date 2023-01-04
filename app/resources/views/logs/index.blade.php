@@ -14,7 +14,7 @@
                     <p class="h4">患者のログを見る</p>
                     <ul class="list-unstyled">
                         @foreach($relations_user as $user)
-                        <li><a href="/logs/view/{{$user->id}}">{{$user->name}} のログを見る</a></li>
+                        <li><a href="/logs/view/{{$user->id}}">{{$user->name}} さんのログを見る</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -25,7 +25,7 @@
                     <p class="h4">医師を選んでログをつける</p>
                     <ul class="list-unstyled">
                         @foreach($relations_doctor as $user)
-                        <li><a href="/logs/{{$user->id}}">{{$user->name}} のログをつける</a></li>
+                        <li><a href="/logs/{{$user->id}}">{{$user->name}} さんに共有するログをつける</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -34,7 +34,7 @@
                     <p class="h4">自分のログの確認</p>
                     <ul class="list-unstyled">
                         @foreach($relations_doctor as $user)
-                        <li><a href="/logs/view/{{$user->id}}">{{$user->name}} のログを確認</a></li>
+                        <li><a href="/logs/view/{{$user->id}}">{{$user->name}} さんに共有しているログを確認する</a></li>
                         @endforeach
                     </ul>
                 </div>

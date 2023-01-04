@@ -36,14 +36,13 @@
                     @endif
                     @endif
 
-
                     @if($user->type == 'doctor' || $user->type == 'system')
                     <hr />
                     <p class="h4">患者のログを確認</p>
                     @if(count($relations_user))
                     <ul class="list-unstyled">
                         @foreach($relations_user as $u)
-                        <li><a href="/logs/view/{{$u->id}}">{{$u->name}}</a></li>
+                        <li><a href="/logs/view/{{$u->id}}">{{$u->name}} さんのログを見る</a></li>
                         @endforeach
                     </ul>
                     @else
@@ -58,7 +57,7 @@
                     @if(count($relations_doctor))
                     <ul class="list-unstyled">
                         @foreach($relations_doctor as $u)
-                        <li><a href="/logs/{{$u->id}}">{{$u->name}} のログをつける</a></li>
+                        <li><a href="/logs/{{$u->id}}">{{$u->name}} さんに共有するログをつける</a></li>
                         @endforeach
                     </ul>
                     @else
@@ -73,7 +72,7 @@
                     @if(count($relations_doctor))
                     <ul class="list-unstyled">
                         @foreach($relations_doctor as $u)
-                        <li><a href="/logs/view/{{$u->id}}">{{$u->name}} のログを確認する</a></li>
+                        <li><a href="/logs/view/{{$u->id}}">{{$u->name}} さんに共有しているログを確認する</a></li>
                         @endforeach
                     </ul>
                     @endif
